@@ -4,16 +4,20 @@ from .models import ContactLead
 
 
 class ContactLeadSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = ContactLead
+
         fields = [
             "id",
             "name",
             "email",
-            "phone",
             "company",
-            "subject",
-            "message",
+            "phone",
+            "project_type",
+            "budget",
+            "timeline",
+            "project_brief",
             "status",
             "created_at",
             "updated_at",

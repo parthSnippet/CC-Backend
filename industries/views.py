@@ -10,3 +10,4 @@ class IndustryViewSet(viewsets.ModelViewSet):
     queryset = Industry.objects.filter(is_active=True)
     serializer_class = IndustrySerializer
     permission_classes = [IsAdminOrReadOnly]
+    lookup_field = "slug"

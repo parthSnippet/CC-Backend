@@ -60,7 +60,9 @@ INSTALLED_APPS = [
     "technologies",
     "blog",
     "contact",
+    "about",
     "core",
+    "comrade_ai",
 ]
 
 
@@ -87,6 +89,9 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "http://192.168.1.8:5173",
+
+
 ]
 
 
@@ -186,12 +191,13 @@ USE_TZ = True
 
 
 # ============================================================
-# STATIC FILES
+# STATIC & MEDIA FILES
 # ============================================================
 
 STATIC_URL = "static/"
 
-
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 # ============================================================
 # EMAIL
 # ============================================================

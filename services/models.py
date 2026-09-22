@@ -5,8 +5,29 @@ class Service(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
 
+    tagline = models.CharField(
+        max_length=200,
+        blank=True,
+        null=True
+    )
+
     short_description = models.CharField(max_length=300)
     description = models.TextField()
+
+    highlights = models.JSONField(
+        default=list,
+        blank=True
+    )
+
+    deliverables = models.JSONField(
+        default=list,
+        blank=True
+    )
+
+    use_cases = models.JSONField(
+        default=list,
+        blank=True
+    )
 
     image = models.ImageField(
         upload_to="services/",
