@@ -8,12 +8,11 @@ from .serializers import ProjectSerializer
 
 
 class ProjectViewSet(viewsets.ModelViewSet):
-    queryset = Project.objects.filter(
-        is_active=True
-    ).prefetch_related(
-        "services",
-        "industries",
-        "technologies",
-    )
     serializer_class = ProjectSerializer
     permission_classes = [IsAdminOrReadOnly]
+
+    def get_queryset(self):
+        qs = Project.objects.prefetch_related("services", "industries", "technologies")
+        if self.request.user and self.request.user.is_staff:
+            return qs.all()
+        return qs.filter(is_active=True)

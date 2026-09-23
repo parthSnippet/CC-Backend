@@ -7,17 +7,21 @@ from .serializers import BlogCategorySerializer, BlogPostSerializer
 
 
 class BlogCategoryViewSet(viewsets.ModelViewSet):
-    queryset = BlogCategory.objects.filter(is_active=True)
     serializer_class = BlogCategorySerializer
     permission_classes = [IsAdminOrReadOnly]
 
+    def get_queryset(self):
+        if self.request.user and self.request.user.is_staff:
+            return BlogCategory.objects.all()
+        return BlogCategory.objects.filter(is_active=True)
+
 
 class BlogPostViewSet(viewsets.ModelViewSet):
-    queryset = (
-        BlogPost.objects
-        .filter(is_published=True)
-        .select_related("category")
-    )
-
     serializer_class = BlogPostSerializer
     permission_classes = [IsAdminOrReadOnly]
+
+    def get_queryset(self):
+        qs = BlogPost.objects.select_related("category")
+        if self.request.user and self.request.user.is_staff:
+            return qs.all()
+        return qs.filter(is_published=True)

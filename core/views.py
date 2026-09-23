@@ -17,12 +17,20 @@ class SiteSettingViewSet(viewsets.ModelViewSet):
 
 
 class SocialLinkViewSet(viewsets.ModelViewSet):
-    queryset = SocialLink.objects.filter(is_active=True)
     serializer_class = SocialLinkSerializer
     permission_classes = [IsAdminOrReadOnly]
 
+    def get_queryset(self):
+        if self.request.user and self.request.user.is_staff:
+            return SocialLink.objects.all()
+        return SocialLink.objects.filter(is_active=True)
+
 
 class FooterMenuViewSet(viewsets.ModelViewSet):
-    queryset = FooterMenu.objects.filter(is_active=True)
     serializer_class = FooterMenuSerializer
     permission_classes = [IsAdminOrReadOnly]
+
+    def get_queryset(self):
+        if self.request.user and self.request.user.is_staff:
+            return FooterMenu.objects.all()
+        return FooterMenu.objects.filter(is_active=True)
