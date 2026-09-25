@@ -54,8 +54,7 @@ class ContactLead(models.Model):
     )
 
     budget = models.CharField(
-        max_length=30,
-        choices=BUDGET_CHOICES,
+        max_length=100,
         blank=True
     )
 
