@@ -1,3 +1,4 @@
+
 from django.contrib import admin
 from .models import Service
 
@@ -6,6 +7,7 @@ from .models import Service
 class ServiceAdmin(admin.ModelAdmin):
     list_display = (
         "title",
+        "parent",
         "slug",
         "is_active",
         "created_at",
@@ -21,6 +23,9 @@ class ServiceAdmin(admin.ModelAdmin):
         "tagline",
         "short_description",
         "description",
+        "meta_title",
+        "meta_description",
+        "seo_keywords",
     )
 
     prepopulated_fields = {
@@ -32,6 +37,7 @@ class ServiceAdmin(admin.ModelAdmin):
             "Basic Information",
             {
                 "fields": (
+                    "parent",
                     "title",
                     "slug",
                     "tagline",
@@ -48,6 +54,23 @@ class ServiceAdmin(admin.ModelAdmin):
                     "deliverables",
                     "use_cases",
                 )
+            },
+        ),
+        (
+            "SEO & Page Content",
+            {
+                "fields": (
+                    "meta_title",
+                    "meta_description",
+                    "seo_keywords",
+                    "page_h1",
+                    "page_h2",
+                    "image_alt_text",
+                ),
+                "description": (
+                    "Manage search engine metadata and the main "
+                    "headings displayed on this service page."
+                ),
             },
         ),
         (

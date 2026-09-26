@@ -15,13 +15,17 @@ class ServiceViewSet(viewsets.ModelViewSet):
         if self.request.user and self.request.user.is_staff:
             return Service.objects.all()
 
-        return Service.objects.filter(is_active=True)
+        return Service.objects.filter(is_active=True, parent=None)
 
     def get_object(self):
         lookup = self.kwargs.get("pk")
-        queryset = self.get_queryset()
 
-        # Admin actions (update/delete) use numeric id
+        # get_object ke liye parent filter nahi chahiye — sab services mein dhundho
+        if self.request.user and self.request.user.is_staff:
+            queryset = Service.objects.all()
+        else:
+            queryset = Service.objects.filter(is_active=True)
+
         if lookup and lookup.isdigit():
             obj = queryset.filter(pk=lookup).first()
         else:
@@ -31,7 +35,6 @@ class ServiceViewSet(viewsets.ModelViewSet):
             raise NotFound("No Service matches the given query.")
 
         self.check_object_permissions(self.request, obj)
-
         return obj
 
 
